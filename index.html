@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>李鑫蓉 | 3D美术实习生 个人作品集网站</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+    }
+
+    :root {
+        --bg-dark: #070b1b;
+        --card-bg: rgba(18, 28, 52, 0.72);
+        --neon-blue: #42d0ff;
+        --neon-purple: #b478ff;
+        --neon-orange: #ff9b40;
+        --text-white: #ffffff;
+        --text-gray: #c2d1ec;
+        --glow-blue: 0 0 14px rgba(66, 208, 255, 0.45);
+        --glow-purple: 0 0 14px rgba(180, 120, 255, 0.45);
+        --radius-lg: 20px;
+        --radius-md: 14px;
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        color: var(--text-white);
+        overflow-x: hidden;
+        background-image:
+            linear-gradient(rgba(66, 208, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(66, 208, 255, 0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+    }
+
+    /* 背景光晕 */
+    .bg-glow {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(90px);
+        opacity: 0.35;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .bg-glow.blue {
+        width: 420px;
+        height: 420px;
+        background: var(--neon-blue);
+        top: -120px;
+        left: -120px;
+    }
+
+    .bg-glow.purple {
+        width: 380px;
+        height: 380px;
+        background: var(--neon-purple);
+        bottom: -140px;
+        right: -140px;
+    }
+
+    /* 漂浮粒子 */
+    .particle {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: var(--neon-blue);
+        box-shadow: var(--glow-blue);
+        opacity: 0.55;
+        animation: floatUp 14s linear infinite;
+        z-index: 1;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(100vh); opacity: 0; }
+        20% { opacity: 0.6; }
+        80% { opacity: 0.6; }
+        100% { transform: translateY(-120px); opacity: 0; }
+    }
+
+    /* 导航栏 */
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background: rgba(7, 11, 27, 0.85);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(66, 208, 255, 0.24);
+    }
+
+    .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1rem 4%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .nav-logo {
+        font-size: 1.5rem;
+        font-weight: 900;
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .nav-links a {
+        color: var(--text-gray);
+        text-decoration: none;
+        margin: 0 0.4rem;
+        padding: 0.5rem 0.8rem;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        transition: 0.35s ease;
+        font-size: 0.92rem;
+    }
+
+    .nav-links a:hover {
+        border-color: var(--neon-blue);
+        box-shadow: var(--glow-blue);
+        color: var(--neon-blue);
+    }
+
+    /* 首屏 Hero */
+    .hero-wrap {
+        min-height: 90vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 4%;
+        background:
+            radial-gradient(circle at 20% 30%, rgba(66, 208, 255, 0.18), transparent 26%),
+            radial-gradient(circle at 80% 70%, rgba(180, 120, 255, 0.18), transparent 26%),
+            radial-gradient(circle at 50% 40%, #121f42, var(--bg-dark));
+        overflow: hidden;
+    }
+
+    .hero-inner {
+        max-width: 1280px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 2.5rem;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-text h1 {
+        font-size: clamp(2.4rem, 6vw, 3.6rem);
+        line-height: 1.2;
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+        -webkit-background-clip: text;
+        color: transparent;
+        margin-bottom: 0.8rem;
+    }
+
+    .hero-text .hero-subtitle {
+        font-size: 1.1rem;
+        color: var(--neon-orange);
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .hero-job {
+        font-size: 1.4rem;
+        color: var(--neon-blue);
+        font-weight: 700;
+        margin-bottom: 1.2rem;
+    }
+
+    .hero-desc {
+        color: var(--text-gray);
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 1.4rem;
+    }
+
+    .hero-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1.8rem;
+    }
+
+    .hero-tag {
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.88rem;
+        border: 1px solid rgba(66, 208, 255, 0.45);
+        color: var(--neon-blue);
+        background: rgba(66, 208, 255, 0.08);
+    }
+
+    .hero-buttons a {
+        display: inline-block;
+        text-decoration: none;
+        padding: 0.9rem 1.8rem;
+        border-radius: 999px;
+        font-weight: 700;
+        margin-right: 0.8rem;
+        margin-bottom: 0.8rem;
+        transition: 0.35s;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+        color: #000;
+        box-shadow: var(--glow-blue);
+    }
+
+    .btn-outline {
+        border: 1px solid var(--neon-blue);
+        color: var(--neon-blue);
+        background: transparent;
+    }
+
+    .btn-outline:hover {
+        box-shadow: var(--glow-blue);
+    }
+
+    /* 右侧科技视觉卡片 */
+    .hero-visual {
+        position: relative;
+    }
+
+    .visual-card {
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(66, 208, 255, 0.45);
+        box-shadow: var(--glow-blue);
+        background:
+            linear-gradient(135deg, rgba(66, 208, 255, 0.12), rgba(180, 120, 255, 0.12)),
+            #0e1630;
+        padding: 1.4rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .visual-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(66, 208, 255, 0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(66, 208, 255, 0.08) 1px, transparent 1px);
+        background-size: 24px 24px;
+        pointer-events: none;
+    }
+
+    .visual-main-img {
+        width: 100%;
+        height: 240px;
+        border-radius: var(--radius-md);
+        object-fit: cover;
+        border: 1px solid rgba(66, 208, 255, 0.35);
+    }
+
+    .visual-info {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .visual-info-text h4 {
+        color: var(--neon-orange);
+        margin-bottom: 0.3rem;
+    }
+
+    .visual-info-text p {
+        color: var(--text-gray);
+        font-size: 0.9rem;
+    }
+
+    .visual-corner {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        border: 1px solid var(--neon-purple);
+        box-shadow: var(--glow-purple);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        color: var(--neon-purple);
+    }
+
+    .visual-mini-grid {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+    }
+
+    .visual-mini {
+        border-radius: 12px;
+        height: 90px;
+        background-size: cover;
+        background-position: center;
+        border: 1px solid rgba(180, 120, 255, 0.35);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .visual-mini span {
+        position: absolute;
+        left: 10px;
+        bottom: 8px;
+        font-size: 0.78rem;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.45);
+        padding: 2px 8px;
+        border-radius: 999px;
+    }
+
+    /* 通用区块 */
+    section {
+        padding: 5rem 4%;
+        position: relative;
+    }
+
+    .container {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+        font-size: 2.2rem;
+        display: inline-block;
+        position: relative;
+        padding-bottom: 0.8rem;
+    }
+
+    .section-title h2::after {
+        content: "";
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+    }
+
+    .section-title p {
+        margin-top: 1rem;
+        color: var(--text-gray);
+    }
+
+    /* 信息卡片 */
+    .info-two-col {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+    }
+
+    .info-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(66, 208, 255, 0.22);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        backdrop-filter: blur(8px);
+        transition: 0.35s;
+    }
+
+    .info-card:hover {
+        border-color: var(--neon-blue);
+        box-shadow: var(--glow-blue);
+        transform: translateY(-5px);
+    }
+
+    .info-card h3 {
+        color: var(--neon-orange);
+        margin-bottom: 1.2rem;
+        font-size: 1.3rem;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.7rem 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        color: var(--text-gray);
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    /* 自我评价 */
+    .eval-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(180, 120, 255, 0.24);
+        border-radius: var(--radius-lg);
+        padding: 2.2rem;
+        backdrop-filter: blur(8px);
+    }
+
+    .eval-card p {
+        color: var(--text-gray);
+        line-height: 1.85;
+        font-size: 1.05rem;
+    }
+
+    /* 技能模块 */
+    .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.8rem;
+    }
+
+    .skill-block {
+        background: var(--card-bg);
+        border: 1px solid rgba(66, 208, 255, 0.22);
+        border-radius: var(--radius-lg);
+        padding: 1.8rem;
+        backdrop-filter: blur(8px);
+        transition: 0.35s;
+    }
+
+    .skill-block:hover {
+        border-color: var(--neon-blue);
+        box-shadow: var(--glow-blue);
+        transform: translateY(-5px);
+    }
+
+    .skill-block h3 {
+        color: var(--neon-orange);
+        margin-bottom: 1.2rem;
+    }
+
+    .skill-item {
+        margin-bottom: 1rem;
+    }
+
+    .skill-name {
+        display: flex;
+        justify-content: space-between;
+        color: var(--text-gray);
+        margin-bottom: 0.4rem;
+    }
+
+    .skill-bar-bg {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .skill-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+        border-radius: 10px;
+    }
+
+    /* 经历时间线 */
+    .timeline-wrap {
+        position: relative;
+        padding-left: 2rem;
+    }
+
+    .timeline-wrap::before {
+        content: "";
+        width: 2px;
+        background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    .timeline-block {
+        position: relative;
+        margin-bottom: 2.5rem;
+        background: var(--card-bg);
+        border: 1px solid rgba(180, 120, 255, 0.24);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        backdrop-filter: blur(8px);
+    }
+
+    .timeline-block::before {
+        content: "";
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--neon-blue);
+        box-shadow: var(--glow-blue);
+        position: absolute;
+        left: -2.65rem;
+        top: 1.8rem;
+    }
+
+    .timeline-title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .timeline-title h3 {
+        color: var(--neon-orange);
+    }
+
+    .timeline-date {
+        color: var(--neon-blue);
+    }
+
+    .timeline-block ul {
+        padding-left: 1.4rem;
+        color: var(--text-gray);
+    }
+
+    .timeline-block li {
+        margin-bottom: 0.7rem;
+        line-height: 1.7;
+    }
+
+    /* 教育背景 */
+    .edu-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(66, 208, 255, 0.22);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        backdrop-filter: blur(8px);
+    }
+
+    .edu-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .edu-top h3 {
+        color: var(--neon-orange);
+        font-size: 1.3rem;
+    }
+
+    .edu-date {
+        color: var(--neon-blue);
+    }
+
+    .edu-major {
+        color: var(--text-gray);
+        margin-bottom: 1rem;
+    }
+
+    .course-title {
+        color: var(--neon-blue);
+        margin-bottom: 0.6rem;
+    }
+
+    .course-text {
+        color: var(--text-gray);
+        line-height: 1.7;
+    }
+
+    /* 作品集 */
+    .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 1.6rem;
+    }
+
+    .port-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(180, 120, 255, 0.24);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        backdrop-filter: blur(8px);
+        transition: 0.35s;
+        cursor: pointer;
+    }
+
+    .port-card:hover {
+        border-color: var(--neon-purple);
+        box-shadow: var(--glow-purple);
+        transform: translateY(-6px);
+    }
+
+    .port-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .port-info {
+        padding: 1.2rem;
+    }
+
+    .port-info h4 {
+        margin-bottom: 0.5rem;
+        color: var(--neon-orange);
+    }
+
+    .port-info p {
+        color: var(--text-gray);
+        font-size: 0.92rem;
+    }
+
+    .port-tags {
+        margin-top: 0.6rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+    }
+
+    .port-tag {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        background: rgba(66, 208, 255, 0.12);
+        color: var(--neon-blue);
+        border: 1px solid rgba(66, 208, 255, 0.35);
+    }
+
+    /* 大图弹窗 */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.88);
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .modal-img {
+        max-width: 90%;
+        max-height: 90vh;
+        border-radius: var(--radius-md);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 24px;
+        right: 30px;
+        color: #fff;
+        font-size: 2.4rem;
+        cursor: pointer;
+    }
+
+    /* 联系模块 */
+    .contact-card {
+        background: var(--card-bg);
+        border: 1px solid var(--neon-blue);
+        border-radius: var(--radius-lg);
+        padding: 2.4rem;
+        box-shadow: var(--glow-blue);
+        backdrop-filter: blur(8px);
+        text-align: center;
+    }
+
+    .contact-item {
+        margin: 0.9rem 0;
+        color: var(--text-gray);
+        font-size: 1.08rem;
+    }
+
+    .contact-item strong {
+        color: var(--neon-orange);
+    }
+
+    /* 页脚 */
+    footer {
+        padding: 2.5rem;
+        text-align: center;
+        border-top: 1px solid rgba(66, 208, 255, 0.18);
+        color: var(--text-gray);
+        font-size: 0.95rem;
+    }
+
+    /* 响应式 */
+    @media (max-width: 960px) {
+        .hero-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+            margin-top: 0.8rem;
+        }
+
+        .timeline-wrap {
+            padding-left: 1.4rem;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="bg-glow blue"></div>
+<div class="bg-glow purple"></div>
+
+<div class="particle" style="left:7%;animation-delay:0s;"></div>
+<div class="particle" style="left:22%;animation-delay:2.2s;"></div>
+<div class="particle" style="left:41%;animation-delay:4.1s;"></div>
+<div class="particle" style="left:58%;animation-delay:6.3s;"></div>
+<div class="particle" style="left:74%;animation-delay:8.2s;"></div>
+<div class="particle" style="left:91%;animation-delay:10.4s;"></div>
+
+<!-- 导航 -->
+<header>
+    <div class="nav-container">
+        <div class="nav-logo">李鑫蓉 · 3D美术实习</div>
+        <div class="nav-links">
+            <a href="#hero">首页</a>
+            <a href="#info">基本信息</a>
+            <a href="#evaluate">自我评价</a>
+            <a href="#skill">专业技能</a>
+            <a href="#practice">在校经历</a>
+            <a href="#education">教育背景</a>
+            <a href="#portfolio">作品集</a>
+            <a href="#contact">联系我</a>
+        </div>
+    </div>
+</header>
+
+<!-- 首屏：无证件照，改成个人信息 + 科技视觉卡片 -->
+<section id="hero" class="hero-wrap">
+    <div class="hero-inner">
+        <div class="hero-text">
+            <div class="hero-subtitle">LI XINRONG · 3D ART INTERN</div>
+            <h1>Hi，我是李鑫蓉</h1>
+            <div class="hero-job">3D美术实习生｜虚拟现实方向</div>
+            <p class="hero-desc">
+                专科在读，熟悉 Unity、UE5 虚幻引擎，掌握 3ds Max 三维建模；熟练 Photoshop 贴图制作，了解剪映视频剪辑。具备社团与班级学生干部经验，擅长团队协作，希望寻求成都地区 3D 美术相关实习岗位。
+            </p>
+            <div class="hero-tags">
+                <span class="hero-tag">3ds Max</span>
+                <span class="hero-tag">UE5</span>
+                <span class="hero-tag">Unity</span>
+                <span class="hero-tag">Photoshop</span>
+                <span class="hero-tag">PBR 材质</span>
+                <span class="hero-tag">虚拟场景</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-primary">联系我</a>
+                <a href="#" class="btn-outline">下载 PDF 简历</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="visual-card">
+                <img class="visual-main-img" src="g56y5.jpg" alt="主视觉场景" />
+                <div class="visual-info">
+                    <div class="visual-info-text">
+                        <h4>国风村落场景</h4>
+                        <p>3ds Max 建模 · UE5 渲染</p>
+                    </div>
+                    <div class="visual-corner">3D</div>
+                </div>
+                <div class="visual-mini-grid">
+                    <div class="visual-mini" style="background-image:url('gdrt.jpg')">
+                        <span>仙侠场景</span>
+                    </div>
+                    <div class="visual-mini" style="background-image:url('grtr.jpg')">
+                        <span>青铜道具</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 基本信息 -->
+<section id="info">
+    <div class="container">
+        <div class="section-title">
+            <h2>基本信息</h2>
+            <p>个人基础档案信息</p>
+        </div>
+        <div class="info-two-col">
+            <div class="info-card">
+                <h3>个人档案</h3>
+                <div class="info-item"><span>姓名</span><span>李鑫蓉</span></div>
+                <div class="info-item"><span>性别</span><span>女</span></div>
+                <div class="info-item"><span>民族</span><span>汉族</span></div>
+                <div class="info-item"><span>出生年月</span><span>2005.06</span></div>
+                <div class="info-item"><span>籍贯</span><span>四川省泸州市</span></div>
+            </div>
+            <div class="info-card">
+                <h3>学籍 & 政治面貌</h3>
+                <div class="info-item"><span>学历</span><span>专科</span></div>
+                <div class="info-item"><span>院校</span><span>成都职业技术学院</span></div>
+                <div class="info-item"><span>专业</span><span>虚拟现实技术应用</span></div>
+                <div class="info-item"><span>政治面貌</span><span>团员</span></div>
+                <div class="info-item"><span>求职意向</span><span>3D美术实习生</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 自我评价 -->
+<section id="evaluate">
+    <div class="container">
+        <div class="section-title">
+            <h2>自我评价</h2>
+        </div>
+        <div class="eval-card">
+            <p>性格沉稳细心，具备良好的逻辑思维与执行力；能快速适应团队协作模式；学习主动性强，能快速掌握新工具与新技术；做事认真细致、注重协作沟通，愿意在实践中不断积累经验，为企业发展贡献力量。</p>
+        </div>
+    </div>
+</section>
+
+<!-- 专业技能 -->
+<section id="skill">
+    <div class="container">
+        <div class="section-title">
+            <h2>专业技能</h2>
+            <p>软件工具与专业能力掌握情况</p>
+        </div>
+        <div class="skill-grid">
+            <div class="skill-block">
+                <h3>三维引擎 & 建模</h3>
+                <div class="skill-item">
+                    <div class="skill-name"><span>3ds Max 建模</span><span>75%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:75%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name"><span>UE5 虚幻引擎</span><span>70%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:70%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name"><span>Unity 引擎</span><span>65%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:65%"></div></div>
+                </div>
+            </div>
+            <div class="skill-block">
+                <h3>平面与多媒体</h3>
+                <div class="skill-item">
+                    <div class="skill-name"><span>Photoshop 贴图设计</span><span>78%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:78%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name"><span>剪映视频剪辑</span><span>62%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:62%"></div></div>
+                </div>
+            </div>
+            <div class="skill-block">
+                <h3>办公软件</h3>
+                <div class="skill-item">
+                    <div class="skill-name"><span>Word / Excel / PPT</span><span>82%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:82%"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 在校实践经历 -->
+<section id="practice">
+    <div class="container">
+        <div class="section-title">
+            <h2>在校实践经历</h2>
+            <p>学生工作与实训项目经验</p>
+        </div>
+        <div class="timeline-wrap">
+            <div class="timeline-block">
+                <div class="timeline-title">
+                    <h3>外宣部干事</h3>
+                    <span class="timeline-date">学生社团工作</span>
+                </div>
+                <ul>
+                    <li>使用 PS 独立设计活动海报、宣传配图；撰写活动新闻稿，完成内容宣发；</li>
+                    <li>协助组织主题学习活动，负责前期筹备、现场协调；多次参与志愿服务。</li>
+                </ul>
+            </div>
+            <div class="timeline-block">
+                <div class="timeline-title">
+                    <h3>班级团支部书记</h3>
+                    <span class="timeline-date">班级学生干部</span>
+                </div>
+                <ul>
+                    <li>负责每月主题团会 PPT 制作与现场宣讲，做好材料归档、团员动员工作。</li>
+                </ul>
+            </div>
+            <div class="timeline-block">
+                <div class="timeline-title">
+                    <h3>VR & 游戏实训项目</h3>
+                    <span class="timeline-date">专业课程实训</span>
+                </div>
+                <ul>
+                    <li>使用 3ds Max 完成场景、道具三维建模、UV 拆分与基础材质制作；在 UE5 搭建虚拟漫游场景，调试光照、基础蓝图交互并打包项目；</li>
+                    <li>使用 Unity 开发 2D 小游戏，制作角色动画、基础交互逻辑，完成适配微信小游戏的打包发布；</li>
+                    <li>运用 PS 制作贴图、项目封面与宣传图，整理演示素材，参与小组成果汇报。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 教育背景 -->
+<section id="education">
+    <div class="container">
+        <div class="section-title">
+            <h2>教育背景</h2>
+        </div>
+        <div class="edu-card">
+            <div class="edu-top">
+                <h3>成都职业技术学院</h3>
+                <span class="edu-date">2024.09 - 2027.06</span>
+            </div>
+            <div class="edu-major">虚拟现实技术应用｜专科（在读）</div>
+            <div class="course-title">主修课程：</div>
+            <div class="course-text">
+                C++程序设计、Unity引擎应用、虚幻引擎（UE5）、3ds Max三维建模、Blender、PS、虚拟现实技术基础、虚拟仿真项目开发、三维动画制作
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 作品集 -->
+<section id="portfolio">
+    <div class="container">
+        <div class="section-title">
+            <h2>作品集案例</h2>
+            <p>三维建模、虚拟场景实训作品展示</p>
+        </div>
+        <div class="portfolio-grid">
+            <div class="port-card" data-img="g56y5.jpg">
+                <img class="port-img" src="g56y5.jpg" alt="古风村落场景" />
+                <div class="port-info">
+                    <h4>古风村落场景</h4>
+                    <p>3ds Max 国风村落搭建，UE5 整合渲染</p>
+                    <div class="port-tags">
+                        <span class="port-tag">3ds Max</span>
+                        <span class="port-tag">UE5</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="gdrt.jpg">
+                <img class="port-img" src="gdrt.jpg" alt="樱花仙侠场景" />
+                <div class="port-info">
+                    <h4>樱花仙侠小场景</h4>
+                    <p>仙侠风格场景，氛围灯光与配色练习</p>
+                    <div class="port-tags">
+                        <span class="port-tag">场景设计</span>
+                        <span class="port-tag">氛围渲染</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="fe.jpg">
+                <img class="port-img" src="fe.jpg" alt="2D小游戏关卡" />
+                <div class="port-info">
+                    <h4>休闲游戏关卡</h4>
+                    <p>2D游戏场景布局，道具摆放设计</p>
+                    <div class="port-tags">
+                        <span class="port-tag">Unity</span>
+                        <span class="port-tag">关卡设计</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="grtr.jpg">
+                <img class="port-img" src="grtr.jpg" alt="青铜古鼎道具" />
+                <div class="port-info">
+                    <h4>青铜古鼎模型</h4>
+                    <p>硬表面国风道具，青铜磨损 PBR 材质</p>
+                    <div class="port-tags">
+                        <span class="port-tag">硬表面</span>
+                        <span class="port-tag">PBR</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="ert.jpg">
+                <img class="port-img" src="ert.jpg" alt="茅草小屋" />
+                <div class="port-info">
+                    <h4>山野茅草小屋</h4>
+                    <p>乡村古风建筑，茅草材质表现练习</p>
+                    <div class="port-tags">
+                        <span class="port-tag">建筑建模</span>
+                        <span class="port-tag">材质表现</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="etruij.jpg">
+                <img class="port-img" src="etruij.jpg" alt="古建院落" />
+                <div class="port-info">
+                    <h4>中式古建院落</h4>
+                    <p>传统古建筑组件化建模，结构还原</p>
+                    <div class="port-tags">
+                        <span class="port-tag">古建结构</span>
+                        <span class="port-tag">3ds Max</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="gr6u7tt.jpg">
+                <img class="port-img" src="gr6u7tt.jpg" alt="重檐楼阁" />
+                <div class="port-info">
+                    <h4>古典重檐楼阁</h4>
+                    <p>多层古建，古风建筑结构练习</p>
+                    <div class="port-tags">
+                        <span class="port-tag">古建</span>
+                        <span class="port-tag">场景资产</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="gtrgtd.jpg">
+                <img class="port-img" src="gtrgtd.jpg" alt="场地规划场景" />
+                <div class="port-info">
+                    <h4>场地规划场景</h4>
+                    <p>校园规划，建筑布局与地形搭建</p>
+                    <div class="port-tags">
+                        <span class="port-tag">地编</span>
+                        <span class="port-tag">规划场景</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="iuyg.jpg">
+                <img class="port-img" src="iuyg.jpg" alt="古风民居" />
+                <div class="port-info">
+                    <h4>古风民居建筑</h4>
+                    <p>传统民居，瓦片、木纹材质制作</p>
+                    <div class="port-tags">
+                        <span class="port-tag">民居</span>
+                        <span class="port-tag">材质</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="rgervre.jpg">
+                <img class="port-img" src="rgervre.jpg" alt="古井道具" />
+                <div class="port-info">
+                    <h4>古井道具模型</h4>
+                    <p>古风石质道具，风化磨损材质</p>
+                    <div class="port-tags">
+                        <span class="port-tag">道具</span>
+                        <span class="port-tag">PBR</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="uh7try.jpg">
+                <img class="port-img" src="uh7try.jpg" alt="山水古风场景" />
+                <div class="port-info">
+                    <h4>山水古风场景</h4>
+                    <p>自然山水环境，植被远景氛围制作</p>
+                    <div class="port-tags">
+                        <span class="port-tag">自然场景</span>
+                        <span class="port-tag">氛围</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="uryt.jpg">
+                <img class="port-img" src="uryt.jpg" alt="开放世界场景" />
+                <div class="port-info">
+                    <h4>开放世界场景</h4>
+                    <p>UE5 地编，地形、角色场景整合</p>
+                    <div class="port-tags">
+                        <span class="port-tag">UE5</span>
+                        <span class="port-tag">开放世界</span>
+                    </div>
+                </div>
+            </div>
+            <div class="port-card" data-img="yrger.jpg">
+                <img class="port-img" src="yrger.jpg" alt="奇幻森林夜景" />
+                <div class="port-info">
+                    <h4>奇幻森林夜景</h4>
+                    <p>奇幻夜景场景，氛围灯光渲染</p>
+                    <div class="port-tags">
+                        <span class="port-tag">夜景</span>
+                        <span class="port-tag">灯光</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 图片弹窗 -->
+<div class="modal-overlay" id="imgModal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-img" id="modalImage" src="" alt="大图预览" />
+</div>
+
+<!-- 联系我 -->
+<section id="contact">
+    <div class="container">
+        <div class="section-title">
+            <h2>联系我</h2>
+            <p>欢迎企业 HR 沟通实习机会</p>
+        </div>
+        <div class="contact-card">
+            <div class="contact-item">姓名：<strong>李鑫蓉</strong></div>
+            <div class="contact-item">联系电话：<strong>15283090508</strong></div>
+            <div class="contact-item">邮箱：<strong>lxr_5@qq.com</strong></div>
+            <div class="contact-item">期望工作地点：<strong>成都，可接受实习</strong></div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 李鑫蓉｜3D美术实习生个人作品集网站｜所有作品均为个人实训练习</p>
+</footer>
+
+<script>
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 图片点击弹窗放大
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.modal-close');
+
+    document.querySelectorAll('.port-card').forEach(card => {
+        card.addEventListener('click', () => {
+            modalImg.src = card.dataset.img;
+            modal.style.display = 'flex';
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
